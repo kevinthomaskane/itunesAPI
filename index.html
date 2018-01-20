@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Practice</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        .songname {
+            margin-left: 5%;
+        }
+
+        #popular {
+            margin-left: 5%;
+        }
+
+        #relevantalbums {
+            margin-left: 5%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="body">
+        <nav>
+            <div class="nav-wrapper">
+                <form>
+                    <div class="input-field">
+                        <input id="search" type="search" placeholder="search for an artist" required>
+                        <label class="label-icon" for="search">
+                            <i class="material-icons">search</i>
+                        </label>
+                        <i class="material-icons">close</i>
+                    </div>
+                </form>
+            </div>
+        </nav>
+
+        <h3 id="relevantalbums"></h3>
+
+        <div class="row">
+            <div class="col s12 m4"></div>
+            <div class="col s12 m4">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://fthmb.tqn.com/o_G3Y6L2yJBrMO2J9VagtCNlOGc=/768x0/filters:no_upscale()/iTunes-logo-57fae5793df78c690f77ca30.png">
+
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title red-text">How to use this site</span>
+                        <p>Search for an artist or song and find top hits</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="carousel">
+
+    </div>
+
+    <h3 id="popular"></h3>
+
+    <ul class="collapsible popout" data-collapsible="accordion"></ul>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script>
+
+        $(function () {
+            $(".carousel").hide();
+            $(".collapsible").hide();
+
+
+
+        });
+        $("form").submit(function (event) {
+            event.preventDefault();
+            var userInput = $("#search").val();
+            $("form")[0].reset();
+            $("input").blur();
+            jug(userInput);
+
+        })
+
+        function jug(query) {
+            $.ajax({
+                url: "http://itunes.apple.com/search?term=" + query,
+                dataType: 'JSONP'
+            })
+                .done(function (data) {
+                    var uniqueAlbums = unique(data.results);
+                    console.log(uniqueAlbums)
+                    $(".carousel").show();
+                    $(".collapsible").show();
+                    $(".card").hide();
+                    console.log(data);
+                    document.getElementById("popular").innerHTML = "Popular Songs";
+                    
+                    document.getElementById("relevantalbums").innerHTML = "Featured Albums";
+                    $(".collapsible").html("");
+                    for (var i = 0; i < data.results.length; i++) {
+                        if (data.results[i].artistName) {
+
+                            $(".collapsible").append(`  
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons"><img src="${data.results[i].artworkUrl100}"></i><span class="songname">${data.results[i].trackName}</span></div>
+                                <div class="collapsible-body"><span>Album: ${data.results[i].collectionName}</span></div>
+                            </li>          
+                            `);
+
+                        }
+
+                    }
+                    $('.carousel').carousel('destroy');
+                    $(".carousel").html("")
+                    for (var i = 0; i < uniqueAlbums.length; i++) {
+                        if (uniqueAlbums[i].artistName) {
+
+                            $(".carousel").append(
+                                `<a class="carousel-item" href="#one!"> <img src="${uniqueAlbums[i].artworkUrl100}"> </a>`);
+                        }
+                    }
+                    $('.collapsible').collapsible();
+                    $('.carousel').carousel();
+
+
+
+
+                })
+                .fail(function (data) {
+                    console.log(data);
+                    $(".collapsible").append(`<li>
+                                <div class="collapsible-header"><i class="material-icons">filter_drama</i>${data.status}</div>
+                                <div class="collapsible-body"><span>${data.status}</span></div>
+                            </li>`);
+                })
+
+        }
+        function unique(arr) {
+            let seen = {};
+            let result = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (seen[arr[i].artworkUrl100] === undefined) {
+                    seen[arr[i].artworkUrl100] = true;
+                    result.push(arr[i]);
+                    console.log(seen)
+                }
+            }
+            return result
+        }
+
+
+
+
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</body>
+
+</html>
