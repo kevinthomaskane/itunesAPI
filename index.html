@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Practice</title>
+    <title>iTunes API</title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -12,16 +12,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
         .songname {
-            margin-left: 5%;
+            margin-left: 10%;
         }
 
         #popular {
-            margin-left: 5%;
+            margin-left: 10%;
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
 
-        #relevantalbums {
-            margin-left: 5%;
+        .row {
+            margin-bottom: 0px;
         }
+
+        .relevantalbums {
+            margin-left: 10%;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .collapsible.popout {
+            margin-left: 10%;
+            margin-right: 10%;
+            background-color: #e3f2fd;
+            
+        }
+
+        
+        .nav-wrapper {
+            margin-right: 10%;
+            margin-left: 10%;
+
+        }
+
+        .big {
+            margin-left: 45%;
+            margin-right: 45%;
+            margin-top: 10%;
+        }
+
+        .carousel {
+            /* border: solid;
+            border-radius: 30px; */
+            width: 80%;
+            margin: 0 auto;
+            height: 300px;
+            
+        }
+
+        .body {
+            padding-bottom: 30px;
+            
+            
+        }
+        
+        .card {
+            box-shadow: 0 5px 10px;
+            margin-top: 30px;
+        }
+
+        
     </style>
 </head>
 
@@ -40,8 +90,24 @@
                 </form>
             </div>
         </nav>
+        <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
 
-        <h3 id="relevantalbums"></h3>
+        <h5 id="relevant"></h5>
+
+
+
 
         <div class="row">
             <div class="col s12 m4"></div>
@@ -64,18 +130,37 @@
 
     </div>
 
-    <h3 id="popular"></h3>
+    <h5 id="popularSongs"></h5>
+
+
 
     <ul class="collapsible popout" data-collapsible="accordion"></ul>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Kevin's iTunes API Project</h5>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2018 Copyright Kevin Kane
+
+            </div>
+        </div>
+    </footer>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+        </script>
     <script>
 
         $(function () {
             $(".carousel").hide();
             $(".collapsible").hide();
-
-
+            $(".big").hide();
+            
 
         });
         $("form").submit(function (event) {
@@ -84,6 +169,9 @@
             $("form")[0].reset();
             $("input").blur();
             jug(userInput);
+            $(".big").show();
+
+
 
         })
 
@@ -93,15 +181,17 @@
                 dataType: 'JSONP'
             })
                 .done(function (data) {
+                    console.log(data);
                     var uniqueAlbums = unique(data.results);
                     console.log(uniqueAlbums)
                     $(".carousel").show();
                     $(".collapsible").show();
                     $(".card").hide();
+                    $(".big").hide();
                     console.log(data);
-                    document.getElementById("popular").innerHTML = "Popular Songs";
-                    
-                    document.getElementById("relevantalbums").innerHTML = "Featured Albums";
+                    $("#popularSongs").html(`<i class="material-icons">music_note</i> Popular Songs`).addClass("relevantalbums");
+
+                    $("#relevant").html(`<i class="material-icons">album</i> Featured Albums`).addClass("relevantalbums");
                     $(".collapsible").html("");
                     for (var i = 0; i < data.results.length; i++) {
                         if (data.results[i].artistName) {
@@ -158,6 +248,8 @@
 
 
     </script>
+
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </body>
