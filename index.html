@@ -7,6 +7,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
+    <link rel="icon" 
+      type="image/png" 
+      href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/ITunes_12.2_logo.png/600px-ITunes_12.2_logo.png">
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,15 +30,17 @@
         }
 
         .relevantalbums {
-            margin-left: 10%;
+            
             margin-top: 30px;
             margin-bottom: 20px;
+            font-family: 'Bitter', serif;
+            text-align: center;
         }
 
         .collapsible.popout {
             margin-left: 10%;
             margin-right: 10%;
-            background-color: #e3f2fd;
+            background-color: #81d4fa;
             
         }
 
@@ -70,6 +76,11 @@
             box-shadow: 0 5px 10px;
             margin-top: 30px;
         }
+        ::-webkit-input-placeholder { /* WebKit browsers */
+    color:   black;
+     opacity: .5 !important;
+}
+
 
         
     </style>
@@ -77,8 +88,8 @@
 
 <body>
     <div class="body">
-        <nav>
-            <div class="nav-wrapper">
+        <nav class="light-blue lighten-3">
+            <div class="nav-wrapper ">
                 <form>
                     <div class="input-field">
                         <input id="search" type="search" placeholder="search for an artist" required>
@@ -135,7 +146,7 @@
 
 
     <ul class="collapsible popout" data-collapsible="accordion"></ul>
-    <footer class="page-footer">
+    <footer class="page-footer light-blue lighten-3"">
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
