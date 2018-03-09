@@ -8,82 +8,10 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
-    <link rel="icon" 
-      type="image/png" 
-      href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/ITunes_12.2_logo.png/600px-ITunes_12.2_logo.png">
-
-    <!--Let browser know website is optimized for mobile-->
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/ITunes_12.2_logo.png/600px-ITunes_12.2_logo.png">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-        .songname {
-            margin-left: 10%;
-        }
 
-        #popular {
-            margin-left: 10%;
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-
-        .row {
-            margin-bottom: 0px;
-        }
-
-        .relevantalbums {
-            
-            margin-top: 30px;
-            margin-bottom: 20px;
-            font-family: 'Bitter', serif;
-            text-align: center;
-        }
-
-        .collapsible.popout {
-            margin-left: 10%;
-            margin-right: 10%;
-            background-color: #81d4fa;
-            
-        }
-
-        
-        .nav-wrapper {
-            margin-right: 10%;
-            margin-left: 10%;
-
-        }
-
-        .big {
-            margin-left: 45%;
-            margin-right: 45%;
-            margin-top: 10%;
-        }
-
-        .carousel {
-            /* border: solid;
-            border-radius: 30px; */
-            width: 80%;
-            margin: 0 auto;
-            height: 300px;
-            
-        }
-
-        .body {
-            padding-bottom: 30px;
-            
-            
-        }
-        
-        .card {
-            box-shadow: 0 5px 10px;
-            margin-top: 30px;
-        }
-        ::-webkit-input-placeholder { /* WebKit browsers */
-    color:   black;
-     opacity: .5 !important;
-}
-
-
-        
-    </style>
 </head>
 
 <body>
@@ -171,7 +99,7 @@
             $(".carousel").hide();
             $(".collapsible").hide();
             $(".big").hide();
-            
+
 
         });
         $("form").submit(function (event) {
@@ -188,51 +116,50 @@
 
         function jug(query) {
             $.ajax({
-                url: "https://itunes.apple.com/search?term=" + query,
+                url: "https://itunes.apple.com/search?term=" + query + "&limit=10",
                 dataType: 'JSONP'
-            })
-                .done(function (data) {
-                    console.log(data);
-                    var uniqueAlbums = unique(data.results);
-                    console.log(uniqueAlbums)
-                    $(".carousel").show();
-                    $(".collapsible").show();
-                    $(".card").hide();
-                    $(".big").hide();
-                    console.log(data);
-                    $("#popularSongs").html(`<i class="material-icons">music_note</i> Popular Songs`).addClass("relevantalbums");
+            }).done(function (data) {
+                console.log(data);
+                var uniqueAlbums = unique(data.results);
+                console.log(uniqueAlbums)
+                $(".carousel").show();
+                $(".collapsible").show();
+                $(".card").hide();
+                $(".big").hide();
+                console.log(data);
+                $("#popularSongs").html(`<i class="material-icons">music_note</i> Popular Songs`).addClass("relevantalbums");
 
-                    $("#relevant").html(`<i class="material-icons">album</i> Featured Albums`).addClass("relevantalbums");
-                    $(".collapsible").html("");
-                    for (var i = 0; i < data.results.length; i++) {
-                        if (data.results[i].artistName) {
+                $("#relevant").html(`<i class="material-icons">album</i> Featured Albums`).addClass("relevantalbums");
+                $(".collapsible").html("");
+                for (var i = 0; i < data.results.length; i++) {
+                    if (data.results[i].artistName) {
 
-                            $(".collapsible").append(`  
+                        $(".collapsible").append(`  
                             <li>
                                 <div class="collapsible-header"><i class="material-icons"><img src="${data.results[i].artworkUrl100}"></i><span class="songname">${data.results[i].trackName}</span></div>
                                 <div class="collapsible-body"><span>Album: ${data.results[i].collectionName}</span></div>
                             </li>          
                             `);
 
-                        }
-
                     }
-                    $('.carousel').carousel('destroy');
-                    $(".carousel").html("")
-                    for (var i = 0; i < uniqueAlbums.length; i++) {
-                        if (uniqueAlbums[i].artistName) {
 
-                            $(".carousel").append(
-                                `<a class="carousel-item" href="#one!"> <img src="${uniqueAlbums[i].artworkUrl100}"> </a>`);
-                        }
+                }
+                $('.carousel').carousel('destroy');
+                $(".carousel").html("")
+                for (var i = 0; i < uniqueAlbums.length; i++) {
+                    if (uniqueAlbums[i].artistName) {
+
+                        $(".carousel").append(
+                            `<a class="carousel-item" href="#one!"> <img src="${uniqueAlbums[i].artworkUrl100}"> </a>`);
                     }
-                    $('.collapsible').collapsible();
-                    $('.carousel').carousel();
+                }
+                $('.collapsible').collapsible();
+                $('.carousel').carousel();
 
 
 
 
-                })
+            })
                 .fail(function (data) {
                     console.log(data);
                     $(".collapsible").append(`<li>

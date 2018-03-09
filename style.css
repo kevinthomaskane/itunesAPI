@@ -1,0 +1,65 @@
+.songname {
+    margin-left: 10%;
+}
+
+#popular {
+    margin-left: 10%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.row {
+    margin-bottom: 0px;
+}
+
+.relevantalbums {
+    
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: 'Bitter', serif;
+    text-align: center;
+}
+
+.collapsible.popout {
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: #81d4fa;
+    
+}
+
+
+.nav-wrapper {
+    margin-right: 10%;
+    margin-left: 10%;
+
+}
+
+.big {
+    margin-left: 45%;
+    margin-right: 45%;
+    margin-top: 10%;
+}
+
+.carousel {
+    /* border: solid;
+    border-radius: 30px; */
+    width: 80%;
+    margin: 0 auto;
+    height: 300px;
+    
+}
+
+.body {
+    padding-bottom: 30px;
+    
+    
+}
+
+.card {
+    box-shadow: 0 5px 10px;
+    margin-top: 30px;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+color:   black;
+opacity: .5 !important;
+}
