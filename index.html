@@ -44,10 +44,6 @@
         </div>
 
         <h5 id="relevant"></h5>
-
-
-
-
         <div class="row">
             <div class="col s12 m4"></div>
             <div class="col s12 m4">
@@ -66,13 +62,8 @@
         </div>
     </div>
     <div class="carousel">
-
     </div>
-
     <h5 id="popularSongs"></h5>
-
-
-
     <ul class="collapsible popout" data-collapsible="accordion"></ul>
     <footer class="page-footer light-blue lighten-3">
         <div class="container">
@@ -82,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer-copyright">
+        <div class="footer-copyright light-blue lighten-3">
             <div class="container">
                 © 2018 Copyright Kevin Kane
 
@@ -92,16 +83,16 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
-        </script>
+    </script>
     <script>
 
         $(function () {
             $(".carousel").hide();
             $(".collapsible").hide();
             $(".big").hide();
-
-
+            $("#popularSongs").hide();
         });
+
         $("form").submit(function (event) {
             event.preventDefault();
             var userInput = $("#search").val();
@@ -109,9 +100,7 @@
             $("input").blur();
             jug(userInput);
             $(".big").show();
-
-
-
+            $("#popularSongs").show();
         })
 
         function jug(query) {
@@ -128,21 +117,17 @@
                 $(".big").hide();
                 console.log(data);
                 $("#popularSongs").html(`<i class="material-icons">music_note</i> Popular Songs`).addClass("relevantalbums");
-
                 $("#relevant").html(`<i class="material-icons">album</i> Featured Albums`).addClass("relevantalbums");
                 $(".collapsible").html("");
                 for (var i = 0; i < data.results.length; i++) {
                     if (data.results[i].artistName) {
-
                         $(".collapsible").append(`  
                             <li>
                                 <div class="collapsible-header"><i class="material-icons"><img src="${data.results[i].artworkUrl100}"></i><span class="songname">${data.results[i].trackName}</span></div>
                                 <div class="collapsible-body"><span>Album: ${data.results[i].collectionName}</span></div>
                             </li>          
                             `);
-
                     }
-
                 }
                 $('.carousel').carousel('destroy');
                 $(".carousel").html("")
@@ -155,10 +140,6 @@
                 }
                 $('.collapsible').collapsible();
                 $('.carousel').carousel();
-
-
-
-
             })
                 .fail(function (data) {
                     console.log(data);
@@ -183,12 +164,8 @@
         }
 
 
-
-
     </script>
 
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </body>
 
